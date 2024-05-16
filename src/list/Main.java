@@ -19,7 +19,7 @@ public class Main {
 		bean1.setBigdecimal1(new BigDecimal(1));
 		bean1.setBigdecimal2(new BigDecimal(2));
 		bean1.setLocaldatetime(LocalDateTime.of(2024, 1, 1, 1, 1));
-		bean1.setString1("001");
+		bean1.setString1("00a");
 		bean1.setString2("002");
 		
 		sortlist.add(bean1);
@@ -29,7 +29,7 @@ public class Main {
 		bean2.setBigdecimal1(new BigDecimal(0));
 		bean2.setBigdecimal2(new BigDecimal(5));
 		bean2.setLocaldatetime(LocalDateTime.of(2023, 1, 1, 1, 1));
-		bean2.setString1("000");
+		bean2.setString1("00A");
 		bean2.setString2("005");
 		
 		sortlist.add(bean2);
@@ -46,11 +46,15 @@ public class Main {
 		System.out.println(sortlist.get(0));		
 		System.out.println(sortlist.get(1));		
 		System.out.println(sortlist.get(2));
-		
+				
 		// Comparator作成
 		Comparator<SampleBean> comparator = 
-				Comparator.comparing(SampleBean::getString1, Comparator.reverseOrder())
+				Comparator.comparing(SampleBean::getString1, String.CASE_INSENSITIVE_ORDER)
 						  .thenComparing(SampleBean::getString2, Comparator.nullsLast(Comparator.naturalOrder()));
+		
+		// Comparator.naturalOrder()
+		// Comparator.reverseOrder()
+		// String.CASE_INSENSITIVE_ORDER
 		
 		List<SampleBean> sortedList = sortlist.stream()
 				.sorted(comparator)
