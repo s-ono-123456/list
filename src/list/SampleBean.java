@@ -1,12 +1,14 @@
 package list;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class SampleBean {
 	private BigDecimal bigdecimal1;
 	private BigDecimal bigdecimal2;
 	private LocalDateTime localdatetime;
+	private LocalDate localdate;
 	private String string1;
 	private String string2;
 	public BigDecimal getBigdecimal1() {
@@ -23,6 +25,12 @@ public class SampleBean {
 	}
 	public LocalDateTime getLocaldatetime() {
 		return localdatetime;
+	}
+	public LocalDate getLocaldate() {
+		return localdate;
+	}
+	public void setLocaldate(LocalDate localdate) {
+		this.localdate = localdate;
 	}
 	public void setLocaldatetime(LocalDateTime localdatetime) {
 		this.localdatetime = localdatetime;
