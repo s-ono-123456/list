@@ -12,8 +12,6 @@ public class SortList<T> {
 	public static final int NORMAL = 0;
 	public static final int REVERSED = 1;
 	
-	// 
-	
 	private static <T> List<T> sort(List<T> beforelist
 			, Function<T,String> sortCondition, int reversed) {
 		
@@ -21,7 +19,11 @@ public class SortList<T> {
 		Collator collator = Collator.getInstance(Locale.JAPANESE);
 		// Strength: 強さプロパティ（aとAやあとアなどを相違しているとみなすかどうか）
 		collator.setStrength(Collator.IDENTICAL);
-
+		
+//		// CustomComparatorの利用
+//		Comparator<String> collator = new CustomComparator();
+		
+		
 		Comparator<T> comparator = 
 				Comparator.comparing(sortCondition, collator);
 		
@@ -48,7 +50,6 @@ public class SortList<T> {
 			, Function<T,String> sortCondition1, int reversed1
 			, Function<T,String> sortCondition2, int reversed2) {
 		
-
 		List<T> sortedList = sort(beforelist, sortCondition2, reversed2);
 		sortedList = sort(sortedList, sortCondition1, reversed1);
 		
