@@ -1,67 +1,83 @@
 package list;
 
-import java.math.BigDecimal;
-import java.text.Collator;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class Main {
 
 	public static void main(String[] args) {		
 		List<SampleBean> sortlist = new ArrayList<>(); 
 		
-		SampleBean bean1 = new SampleBean();
-		bean1.setBigdecimal1(new BigDecimal(1));
-		bean1.setBigdecimal2(new BigDecimal(2));
-		bean1.setLocaldatetime(LocalDateTime.of(2024, 1, 1, 1, 1));
-		bean1.setLocaldate(LocalDate.of(2024, 1, 1));
-		bean1.setString1("あ");
-		bean1.setString2("2024/01/01");
+		long beforememory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		
-		sortlist.add(bean1);
+		for (int i = 0; i < 30000; i++) {
+			SampleBean bean = new SampleBean();
+			bean.setString1(Util.random());
+			bean.setString2(Util.random());
+			bean.setString3(Util.random());
+			bean.setString4(Util.random());
+			bean.setString5(Util.random());
+			bean.setString6(Util.random());
+			bean.setString7(Util.random());
+			bean.setString8(Util.random());
+			bean.setString9(Util.random());
+			bean.setString10(Util.random());
+			bean.setString11(Util.random());
+			bean.setString12(Util.random());
+			bean.setString13(Util.random());
+			bean.setString14(Util.random());
+			bean.setString15(Util.random());
+			bean.setString16(Util.random());
+			bean.setString17(Util.random());
+			bean.setString18(Util.random());
+			bean.setString19(Util.random());
+			bean.setString20(Util.random());
+			sortlist.add(bean);
+		}
+		long aftermemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+		System.out.println("メモリ量： " + (aftermemory - beforememory)/1024/1024 + " MB");
 		
+		System.out.println("######################################");			
+		System.out.println("#############　　　ソート前　　　#############");	
+		System.out.println("######################################");
+		
+		// 処理時間計測
+		for (int i = 0; i < 10; i++) {
+			System.out.println(sortlist.get(i));	
+		}
+		long startTime = System.currentTimeMillis();
 
-		SampleBean bean2 = new SampleBean();
-		bean2.setBigdecimal1(new BigDecimal(0));
-		bean2.setBigdecimal2(new BigDecimal(5));
-		bean2.setLocaldatetime(LocalDateTime.of(2023, 1, 1, 1, 1));
-		bean2.setLocaldate(LocalDate.of(2023, 1, 1));
-		bean2.setString1("あ");
-		bean2.setString2("2024/01/05");
-		
-		sortlist.add(bean2);
-
-		SampleBean bean3 = new SampleBean();
-		bean3.setBigdecimal1(new BigDecimal(0));
-		bean3.setBigdecimal2(new BigDecimal(4));
-		bean3.setLocaldatetime(LocalDateTime.of(2022, 1, 1, 1, 1));
-		bean3.setLocaldate(LocalDate.of(2023, 2, 1));
-		bean3.setString1("う");
-		bean3.setString2("2023/04/01");
-
-		sortlist.add(bean3);
-		
-		System.out.println(sortlist.get(0));		
-		System.out.println(sortlist.get(1));		
-		System.out.println(sortlist.get(2));
-				
-		// Comparator作成
-		Collator collator = Collator.getInstance(Locale.JAPANESE);
-		// Strength: 強さプロパティ（aとAやあとアなどを相違しているとみなすかどうか）
-		collator.setStrength(Collator.IDENTICAL);
-		
-		System.out.println(collator.compare("い", "亜"));
+//				
+//		// Comparator作成
+//		Collator collator = Collator.getInstance(Locale.JAPANESE);
+//		// Strength: 強さプロパティ（aとAやあとアなどを相違しているとみなすかどうか）
+//		collator.setStrength(Collator.IDENTICAL);
+//		
+//		System.out.println(collator.compare("い", "亜"));
 
 		
 		List<SampleBean> sortedList = 
-				SortList.sortString(sortlist, SampleBean::getString1, SortList.NORMAL
-						, SampleBean::getString2, SortList.NORMAL);
+				SortList.sortString(sortlist
+						, SampleBean::getString1, SortList.NORMAL
+						, SampleBean::getString2, SortList.NORMAL
+						, SampleBean::getString3, SortList.NORMAL);
+		
 
+		long endTime = System.currentTimeMillis();
+		
+		System.out.println();
+		
+		System.out.println("処理時間：" + (endTime - startTime) + " ms");
+		
+		System.out.println();
+
+
+		System.out.println("######################################");			
+		System.out.println("#############　　　ソート後　　　#############");	
+		System.out.println("######################################");
+		for (int i = 0; i < 10; i++) {
+			System.out.println(sortedList.get(i));	
+		}
 //		sortedList = 
 //				SortList.sortDate(sortlist, SampleBean::getLocaldate, SortList.NORMAL);
 		
@@ -71,17 +87,6 @@ public class Main {
 //		List<SampleBean> sortedList = sortlist.stream()
 //				.sorted(comparator)
 //				.collect(Collectors.toList());
-		
-		
-		System.out.println("ソート処理後");
-
-		System.out.println(sortedList.get(0));
-		System.out.println(sortedList.get(1));
-		System.out.println(sortedList.get(2));
-		
-		SortList<SampleBean> sort = new SortList<>();
-		
-//		List<?> sortedList2 = sort.sort(sortlist);
 		
 	}
 

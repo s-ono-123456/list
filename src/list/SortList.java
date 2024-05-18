@@ -56,6 +56,19 @@ public class SortList<T> {
 		return sortedList;
 	}
 
+	
+	public static <T> List<T> sortString(List<T> beforelist
+			, Function<T,String> sortCondition1, int reversed1
+			, Function<T,String> sortCondition2, int reversed2
+			, Function<T,String> sortCondition3, int reversed3) {
+		
+		List<T> sortedList = sort(beforelist, sortCondition3, reversed3);
+		sortedList = sort(sortedList, sortCondition2, reversed2);
+		sortedList = sort(sortedList, sortCondition1, reversed1);
+		
+		return sortedList;
+	}
+
 	// LocalDateでのソートはできなかった。（LocalDateTimeではソート可能だったが、LocalDateではコンパイルエラーとなってしまう模様）
 	// 複数条件でのソートを行うときに複雑化してしまうため、一律Stringに変換したうえでソートする方法としたい。
 	
